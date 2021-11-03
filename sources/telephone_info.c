@@ -48,9 +48,9 @@ void FillBase(base_t *base) {
 
         char* nameOwner = malloc(MAX_LENGTH_NAME);
         scanf("%s", nameOwner);
-        //if (!IsValidNumber(networkCode, number)) {
-        //    continue;
-        //}
+        if (!IsValidNumber(networkCode, number)) {
+            continue;
+        }
         Add(base, networkCode, number, nameOwner);
     }
 }
@@ -76,10 +76,28 @@ void Print(base_t* base) {
         printf("Base is empty");
         return;
     }
+    Sort(base);
     for (unsigned long i = 0; i < base->telephoneCount_; ++i) {
         if (base->telephones[i].nameOwner_ != NULL) {
+            setbuf(stdout, 0);
             printf("+%lu%lu - %s\n", base->telephones[i].networkCode_,
                    base->telephones[i].number_, base->telephones[i].nameOwner_);
+        }
+    }
+}
+
+void Sort(base_t *base) {
+    if (base == NULL) {
+        return;
+    }
+    telephone_t tmp;
+    for (unsigned long i = 1; i < base->telephoneCount_; ++i) {
+        for (unsigned long j = 0; j < base->telephoneCount_ - 1; ++j) {
+            if (base->telephones[j].networkCode_ > base->telephones[j + 1].networkCode_) {
+                tmp = base->telephones[j];
+                base->telephones[j] = base->telephones[j + 1];
+                base->telephones[j + 1] = tmp;
+            }
         }
     }
 }
