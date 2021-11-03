@@ -28,8 +28,8 @@ target_include_directories(tests
 
 target_link_libraries(tests
         gtest_main
-        date)
+        telephone)
 
 # Coverage
-target_compile_options(telephone PRIVATE --coverage)
-target_link_libraries(telephone INTERFACE --coverage)
+#target_compile_options(telephone PRIVATE --coverage)
+#target_link_libraries(telephone INTERFACE --coverage)
