@@ -9,40 +9,40 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install dependencies
+      - name: dependencies
         run: |
           sudo apt install
           sudo apt install lcov cppcheck valgrind gcovr
           git submodule update --init
-      - name: Build
+      - name: build
         run: |
           mkdir _builds
           cd _builds
           cmake ..
           make all
-      - name: Tests
+      - name: tests
         run: |
           cd _builds
           ./tests
-      - name: Cppcheck
+      - name: cppcheck
         run: |
           cppcheck --enable=all --suppress=missingInclude --error-exitcode=1 --inconclusive --language=c sources/telephone_info.c sources/main.c include/telephone_info.h
-      - name: Check valgrind
+      - name: valgrind
         run: |
           cd _builds
           valgrind --leak-check=full --error-exitcode=1 ./tests
-      - name: Create coverage
+      - name: coverage
         run: |
           cd _builds
           ./tests
           cd ..
           gcovr -r . --exclude _builds/ --exclude sources/main.c --html --html-details -o my_coverage.html
-      - name: Code coverage report html
+      - name: coverage report
         uses: actions/upload-artifact@v2
         with:
           name: codecov_report
           path: my_coverage.html
-      - name: Run clang-format style check
+      - name: clang-format style
         uses: DoozyX/clang-format-lint-action@v0.12
         with:
           source: './sources ./include ./tests'
