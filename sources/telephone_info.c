@@ -42,7 +42,7 @@ void Add(base_t *base, unsigned long networkCode, unsigned long number,
     strcpy(base->telephones_[base->telephoneCount_].nameOwner_,
            (const char *)(""));
   }
-  base->telephoneCount_++;
+  ++base->telephoneCount_;
 }
 
 void FillBase(base_t *base) {
@@ -53,7 +53,6 @@ void FillBase(base_t *base) {
   while (scanf("%lu", &networkCode) != EOF) {
     unsigned long number;
     scanf("%lu", &number);
-
     char *nameOwner = malloc(MAX_LENGTH_NAME);
     scanf("%20s", nameOwner);
     if (!IsValidNumber(networkCode, number)) {
