@@ -26,7 +26,7 @@ void Add(base_t *base, unsigned long networkCode, unsigned long number,
   }
 
   if (base->capacity_ == base->telephoneCount_) {
-    base->capacity_ *= 2;
+    base->capacity_ <<= 1;
     base->telephones_ = (telephone_t *)realloc(
         base->telephones_, base->capacity_ * sizeof(telephone_t));
   }
@@ -88,7 +88,6 @@ void Print(base_t *base) {
   Sort(base);
   for (unsigned long i = 0; i < base->telephoneCount_; ++i) {
     if (base->telephones_[i].nameOwner_ != NULL) {
-      setbuf(stdout, 0);
       printf("+%lu%lu - %s\n", base->telephones_[i].networkCode_,
              base->telephones_[i].number_, base->telephones_[i].nameOwner_);
     }
