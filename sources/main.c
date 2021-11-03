@@ -5,6 +5,7 @@ int main() {
     CreateBase(&base);
     printf("Enter a numbers: network code (without +), number, and owner's name\n");
     FillBase(&base);
+    Sort(&base);
     Print(&base);
     DeleteBase(&base);
 }
