@@ -36,7 +36,7 @@ jobs:
           cd _builds
           ./tests
           cd ..
-          gcovr -r . --exclude _builds/ --exclude sources/main.c --html --html-details -o my_coverage.html
+          gcovr -r . --exclude _builds/ --exclude third_party/ --exclude sources/main.c —-html —-html-details -o my_coverage.html
       - name: coverage report
         uses: actions/upload-artifact@v2
         with:
