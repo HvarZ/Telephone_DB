@@ -23,18 +23,18 @@ jobs:
       - name: Tests
         run: |
           cd _builds
-          ./test_restaurant
+          ./tests
       - name: Cppcheck
         run: |
-          cppcheck --enable=all --suppress=missingInclude --error-exitcode=1 --inconclusive --language=c sources/restaurant.c sources/main.c include/restaurant.h
+          cppcheck --enable=all --suppress=missingInclude --error-exitcode=1 --inconclusive --language=c sources/telephone_info.c sources/main.c include/telephone_info.h
       - name: Check valgrind
         run: |
           cd _builds
-          valgrind --leak-check=full --error-exitcode=1 ./test_restaurant
+          valgrind --leak-check=full --error-exitcode=1 ./tests
       - name: Create coverage
         run: |
           cd _builds
-          ./test_restaurant
+          ./tests
           cd ..
           gcovr -r . --exclude _builds/ --exclude sources/main.c --html --html-details -o my_coverage.html
       - name: Code coverage report html
