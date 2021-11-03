@@ -15,7 +15,7 @@ typedef struct TelephoneInfo {
 typedef struct TelephoneBase {
     unsigned long telephoneCount_;
     unsigned long capacity_;
-    telephone_t* telephones;
+    telephone_t* telephones_;
 } base_t;
 
 void CreateBase(base_t* base);
