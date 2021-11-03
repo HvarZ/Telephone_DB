@@ -12,15 +12,6 @@ TEST(telephone, validation_number) {
     ASSERT_EQ(IsValidNumber(12345, 1234567), false);
 }
 
-TEST(telephone, create_base) {
-    base_t base;
-    ASSERT_NE(base.capacity_, 0);            // checking for garbage
-    CreateBase(&base);
-    ASSERT_EQ(base.telephoneCount_, 0);
-    ASSERT_EQ(base.capacity_, 1);
-    DeleteBase(&base);
-}
-
 TEST(telephone, add_number) {
     base_t base;
     CreateBase(&base);
