@@ -9,44 +9,44 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: install dependencies
+      - name: Install dependencies
         run: |
           sudo apt install
-          sudo apt install lcov cppcheck valgrind
+          sudo apt install lcov cppcheck valgrind gcovr
           git submodule update --init
-      - name: cmake build
+      - name: Build
         run: |
-          mkdir build
-          cd build
+          mkdir _builds
+          cd _builds
           cmake ..
           make all
-      - name: test
+      - name: Tests
         run: |
-          cd build
-          ./tests
-      - name: coverage
+          cd _builds
+          ./test_restaurant
+      - name: Cppcheck
         run: |
-          lcov --version
-          touch coverage.info
-          lcov --directory . --capture --output-file coverage.info
-          lcov --remove coverage.info \
-             '/usr/*' \
-             "$(pwd)"'/third_party/*' \
-             "$(pwd)"'/tests/*' \
-             --output-file coverage.info
-          bash <(curl -s https://codecov.io/bash) -t  f75e7e54-9fcd-46da-bbc6-8c3347735eef -f coverage.info || echo "Codecov did not collect coverage reports"
-      - name: cppcheck
+          cppcheck --enable=all --suppress=missingInclude --error-exitcode=1 --inconclusive --language=c sources/restaurant.c sources/main.c include/restaurant.h
+      - name: Check valgrind
         run: |
-          cppcheck --inconclusive --enable=all --language=c --error-exitcode=1 src/rim.c src/main.c
-      - name: valgrind
+          cd _builds
+          valgrind --leak-check=full --error-exitcode=1 ./test_restaurant
+      - name: Create coverage
         run: |
-          cd build
-          valgrind --leak-check=full --error-exitcode=1 ./tests
-      - name: сlang-format style check
+          cd _builds
+          ./test_restaurant
+          cd ..
+          gcovr -r . --exclude _builds/ --exclude sources/main.c --html --html-details -o my_coverage.html
+      - name: Code coverage report html
+        uses: actions/upload-artifact@v2
+        with:
+          name: codecov_report
+          path: my_coverage.html
+      - name: Run clang-format style check
         uses: DoozyX/clang-format-lint-action@v0.12
         with:
+          source: './sources ./include ./tests'
+          exclude: './_builds'
+          extensions: 'h,cpp,c'
           clangFormatVersion: 12
-          source: './src ./include ./tests'
-          exclude: './build ./third_party'
-          extensions: 'h,c,cpp'
           style: google
