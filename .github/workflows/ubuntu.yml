@@ -46,7 +46,7 @@ jobs:
         uses: DoozyX/clang-format-lint-action@v0.12
         with:
           source: './sources ./include ./tests'
-          exclude: './_builds'
+          exclude: './_builds ./third_party'
           extensions: 'h,cpp,c'
           clangFormatVersion: 12
           style: google
