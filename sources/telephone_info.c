@@ -52,7 +52,7 @@ void FillBase(base_t *base) {
         scanf("%lu", &number);
 
         char* nameOwner = malloc(MAX_LENGTH_NAME);
-        scanf("%s", nameOwner);
+        scanf("%20s", nameOwner);
         if (!IsValidNumber(networkCode, number)) {
             continue;
         }
