@@ -33,4 +33,4 @@ void Sort(base_t *base);
 
 bool IsValidNumber(unsigned long networkCode, unsigned long number);
 
-#endif // INDIVIDUAL_TASK_1_TELEPHONE_INFO_H
+#endif  // INDIVIDUAL_TASK_1_TELEPHONE_INFO_H
