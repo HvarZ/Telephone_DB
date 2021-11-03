@@ -51,6 +51,7 @@ TEST(telephone, fillBase) {
     ASSERT_EQ(base.telephoneCount_, 0);
     FillBase(NULL);
     ASSERT_EQ(base.telephoneCount_, 0);
+    DeleteBase(&base);
 }
 
 TEST(telephone, deleteBase) {
