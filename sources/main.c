@@ -1,6 +1,12 @@
-#include <stdio.h>
+#include <telephone_info.h>
 
 int main() {
-    printf("Hello, world!");
-    return 0;
+    base_t base;
+    CreateBase(&base);
+    printf("Enter a numbers: network code (without +), number, and owner's name\n");
+    FillBase(&base);
+    Print(&base);
+    DeleteBase(&base);
 }
+
+
