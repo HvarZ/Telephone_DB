@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install dependencies
+        run: |
+          sudo apt install
+          sudo apt install lcov cppcheck valgrind
+          git submodule update --init
+      - name: cmake build
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make all
+      - name: test
+        run: |
+          cd build
+          ./tests
+      - name: coverage
+        run: |
+          lcov --version
+          touch coverage.info
+          lcov --directory . --capture --output-file coverage.info
+          lcov --remove coverage.info \
+             '/usr/*' \
+             "$(pwd)"'/third_party/*' \
+             "$(pwd)"'/tests/*' \
+             --output-file coverage.info
+          bash <(curl -s https://codecov.io/bash) -t  f75e7e54-9fcd-46da-bbc6-8c3347735eef -f coverage.info || echo "Codecov did not collect coverage reports"
+      - name: cppcheck
+        run: |
+          cppcheck --inconclusive --enable=all --language=c --error-exitcode=1 src/rim.c src/main.c
+      - name: valgrind
+        run: |
+          cd build
+          valgrind --leak-check=full --error-exitcode=1 ./tests
+      - name: сlang-format style check
+        uses: DoozyX/clang-format-lint-action@v0.12
+        with:
+          clangFormatVersion: 12
+          source: './src ./include ./tests'
+          exclude: './build ./third_party'
+          extensions: 'h,c,cpp'
+          style: google
