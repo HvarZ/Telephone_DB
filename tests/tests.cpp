@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include <string>
 
 extern "C" {
@@ -78,8 +79,9 @@ TEST(telephone, print) {
   testing::internal::CaptureStdout();
   Print(&base);
   std::string output = testing::internal::GetCapturedStdout();
-  std::string answer = "+11234567 - Zakhar\n"
-                       "+21234567 - Alex\n";
+  std::string answer =
+      "+11234567 - Zakhar\n"
+      "+21234567 - Alex\n";
   ASSERT_EQ(output, answer);
   DeleteBase(&base);
 }
@@ -95,10 +97,11 @@ TEST(telephone, sort) {
   testing::internal::CaptureStdout();
   Print(&base);
   std::string output = testing::internal::GetCapturedStdout();
-  std::string answer = "+11234567 - Anton\n"
-                       "+21234567 - Alex\n"
-                       "+31234567 - Daria\n"
-                       "+41234567 - Zakhar\n";
+  std::string answer =
+      "+11234567 - Anton\n"
+      "+21234567 - Alex\n"
+      "+31234567 - Daria\n"
+      "+41234567 - Zakhar\n";
   ASSERT_EQ(output, answer);
   DeleteBase(&base);
 }
